@@ -32,14 +32,13 @@ setup(
         'Topic :: System :: Networking :: Monitoring',
     ],
     keywords='network diagnostics, traceroute, ping',
-    packages=['src'],
-    include_package_data=True,
+    packages=['ping_control']+find_packages(),
     install_requires=['numpy',
                       'matplotlib',
                       'click',],
     entry_points={
         'console_scripts':[
-            'statstrace = src.tracert_stats:main'
+            'statstrace = ping_control.tracert_stats:main'
         ]
     }
 )
