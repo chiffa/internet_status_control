@@ -5,19 +5,36 @@ Then render it as a network
 """
 
 import subprocess
+import platform
 import numpy as np
 from matplotlib import pyplot as plt
 from textwrap import wrap
 from datetime import datetime, timedelta
 import click
-import networkx
+# import networkx
 
-def ping_round(hostname):
+os_name = platform.system()
+print os_name
+
+
+@click.group()
+def main():
+    pass
+
+
+@click.command()
+@click.argument('hostname')
+def trace(hostname):
     # TODO: perform tracert several times and do stats on the several times run
-    p = subprocess.Popen(['tracert', hostname],
+
+    if os_name == 'Windows':
+        p = subprocess.Popen(['tracert', hostname],
                          shell=True,
                          stdout=subprocess.PIPE,
                          stderr=subprocess.PIPE)
+
+    else:
+        raise Exception("Don't work on Linux or MacOS for now :S")
 
     out, err = p.communicate()
     outlist = [line.split('  ') for line in out.split('\r\n') if line]
@@ -53,6 +70,8 @@ def ping_round(hostname):
     # names_ = host_names[:, 0]
 
     # print parse_
+    # TODO: break here: this is where we stop getting raw data and are switching to the analysis
+
 
     mean_ping = np.nanmean(parse_, axis=1).astype(np.int).tolist()
     std_ping = np.nanstd(parse_, axis=1).astype(np.int).tolist()
@@ -87,8 +106,13 @@ def ping_round(hostname):
     plt.gcf().set_size_inches(8, 9)
     plt.show()
 
+
+main.add_command(trace)
+
+
 if __name__ == "__main__":
-# TODO: embed in a 15 minute loop
-    ping_round('google.com')
-    ping_round('youtube.com')
-    ping_round('client4.google.com')
+    # TODO: embed in a 15 minute loop
+    # TODO: make it log the results and then compute the long - term statistics.
+    trace('google.com')
+    # ping_round('youtube.com')
+    # ping_round('client4.google.com')
