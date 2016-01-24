@@ -13,7 +13,7 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='DNS route diagnosis',
-    version='0.0.1',
+    version='0.0.2',
     description='Information Flow Analyzer for biological networks',
     long_description=long_description,
     url='https://github.com/chiffa/internet_status_control',
@@ -39,6 +39,6 @@ setup(
                       'click',],
     entry_points="""
     [console_scripts]
-    statstrace = setup:main
+    statstrace = tracert_stats:main
     """,
 )
