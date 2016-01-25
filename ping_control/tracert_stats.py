@@ -72,7 +72,8 @@ def trace(hostname):
     # print parse_
     # TODO: break here: this is where we stop getting raw data and are switching to the analysis
 
-
+    # TODO: properly process the case where all the pings are lost and the router returns a "Request timed out" message
+    # along the line.
     mean_ping = np.nanmean(parse_, axis=1).astype(np.int).tolist()
     std_ping = np.nanstd(parse_, axis=1).astype(np.int).tolist()
     lost_ping = np.sum(np.isnan(parse_), axis=1).astype(np.int).tolist()
