@@ -72,16 +72,21 @@ def trace(hostname):
     # print parse_
     # TODO: break here: this is where we stop getting raw data and are switching to the analysis
 
-    mean_ping = np.nanmean(parse_, axis=1).astype(np.int).tolist()
-    std_ping = np.nanstd(parse_, axis=1).astype(np.int).tolist()
-    lost_ping = np.sum(np.isnan(parse_), axis=1).astype(np.int).tolist()
+    mean_ping = np.nanmean(parse_, axis=1).astype(np.int)
+    std_ping = np.nanstd(parse_, axis=1).astype(np.int)
+    lost_ping = np.sum(np.isnan(parse_), axis=1).astype(np.int)
 
-    timed_out = lost_ping >2
+    timed_out = lost_ping > 2
+    print timed_out
     mean_ping[timed_out] = -1
-    lost_ping[timed_out] = -1
+    std_ping[timed_out] = -1
     host_names = np.array(host_names)
     host_names[timed_out] = 'Request timed out'
     host_names = host_names.tolist()
+
+    mean_ping = mean_ping.tolist()
+    std_ping = std_ping.tolist()
+    lost_ping = lost_ping.tolist()
 
     def autolabel(rects):
         # attach some text labels
@@ -119,6 +124,7 @@ main.add_command(trace)
 if __name__ == "__main__":
     # TODO: embed in a 15 minute loop
     # TODO: make it log the results and then compute the long - term statistics.
-    trace('google.com')
+    main()
+    # trace(hostname='facebook.com')
     # ping_round('youtube.com')
     # ping_round('client4.google.com')
