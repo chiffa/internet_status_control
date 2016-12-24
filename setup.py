@@ -13,8 +13,8 @@ with open(path.join(here, 'README.md'), encoding='utf-8') as f:
 
 setup(
     name='DNS route diagnosis',
-    version='0.0.5',
-    description='Information Flow Analyzer for biological networks',
+    version='0.1.5',
+    description='performs traceroute and remembers the results',
     long_description=long_description,
     url='https://github.com/chiffa/internet_status_control',
     author='Andrei Kucharavy',
